@@ -3,7 +3,10 @@ const dotEnv = require("dotenv");
 const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const { errorHandler, notFoundHandler } = require("./middlewares/common");
+const {
+  errorHandler,
+  notFoundHandler,
+} = require("./middlewares/common/errorHandler.js");
 const loginRouter = require("./router/loginRouter");
 const usersRouter = require("./router/usersRouter");
 const inboxRouter = require("./router/loginRouter");
@@ -38,9 +41,9 @@ app.use(inboxRouter);
 
 //error handling
 //common error handler
-app.use(errorHandler);
+// app.use(errorHandler);
 //404 not found
-app.use(notFoundHandler);
+// app.use(notFoundHandler);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server started on port ${process.env.PORT}`);
