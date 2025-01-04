@@ -14,6 +14,7 @@ const login = async (req, res) => {
     );
 
     const userInfo = {
+      _id: user._id,
       name: user.name,
       email: user.email,
       mobile: user.mobile,
@@ -33,7 +34,6 @@ const login = async (req, res) => {
     res.json({
       status: 200,
       message: "User logged in successfully",
-      userInfo: userInfo,
       token: token,
     });
   } catch (e) {

@@ -56,16 +56,18 @@ const userValidationResultHandler = async (req, res, next) => {
   const mappedErrors = errors.mapped();
 
   if (Object.keys(mappedErrors).length > 0) {
-    let avatarFile = await req.files.avatar[0];
-    // Unlink uploaded files if present
-    if (avatarFile) {
-      const { filename } = avatarFile;
-      const filePath = path.join(__dirname, `../public/uploads/${filename}`);
-      unlink(filePath, (err) => {
-        if (err) {
-          console.error(`Failed to delete file: ${filePath}`, err);
-        }
-      });
+    if (Object.keys(req?.files).length > 0) {
+      let avatarFile = await req.files.avatar[0];
+      // Unlink uploaded files if present
+      if (avatarFile) {
+        const { filename } = avatarFile;
+        const filePath = path.join(__dirname, `../public/uploads/${filename}`);
+        unlink(filePath, (err) => {
+          if (err) {
+            console.error(`Failed to delete file: ${filePath}`, err);
+          }
+        });
+      }
     }
 
     // Return validation errors

@@ -9,7 +9,7 @@ const {
 } = require("./middlewares/common/errorHandler.js");
 const loginRouter = require("./router/loginRouter");
 const usersRouter = require("./router/usersRouter");
-const inboxRouter = require("./router/loginRouter");
+const inboxRouter = require("./router/inboxRouter.js");
 
 const app = express();
 dotEnv.config();
