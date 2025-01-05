@@ -4,12 +4,12 @@ const {
   addConversation,
   deleteConversation,
 } = require("../controllers/inboxController");
-const checkLogin = require("../middlewares/common/checkLogin");
+const { checkLogin } = require("../middlewares/common/checkLogin");
 
 const router = express.Router();
 
-router.get("/inbox", checkLogin, getInboxs);
-router.post("/inbox", checkLogin, addConversation);
-router.delete("/inbox/:id", checkLogin, deleteConversation);
+router.get("/api/inbox", checkLogin, getInboxs);
+router.post("/api/inbox", checkLogin, addConversation);
+router.delete("/api/inbox/:id", checkLogin, deleteConversation);
 
 module.exports = router;

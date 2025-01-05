@@ -56,7 +56,7 @@ const userValidationResultHandler = async (req, res, next) => {
   const mappedErrors = errors.mapped();
 
   if (Object.keys(mappedErrors).length > 0) {
-    if (Object.keys(req?.files).length > 0) {
+    if (req.files && Object.keys(req?.files).length > 0) {
       let avatarFile = await req.files.avatar[0];
       // Unlink uploaded files if present
       if (avatarFile) {

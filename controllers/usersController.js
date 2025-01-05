@@ -14,7 +14,10 @@ const getUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const fileNmae = req.files.avatar[0].filename;
+    const fileNmae =
+      req.files && Object.keys(req?.files).length > 0
+        ? req.files.avatar[0].filename
+        : null;
     const hashPassword = await bcrypt.hash(req.body.password, 10);
     let data = {};
 

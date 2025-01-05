@@ -1,7 +1,10 @@
 const express = require("express");
 const { createUser } = require("../controllers/usersController");
 const fileUpload = require("../middlewares/fileUpload/fileUpload.js");
-const checkLogin = require("../middlewares/common/checkLogin.js");
+const {
+  checkLogin,
+  requireRole,
+} = require("../middlewares/common/checkLogin.js");
 const {
   userValidator,
   userValidationResultHandler,
@@ -11,8 +14,9 @@ const router = express.Router();
 
 // router.get("/user", );
 router.post(
-  "/user",
+  "/api/user",
   checkLogin,
+  requireRole("admin"),
   fileUpload,
   userValidator,
   userValidationResultHandler,
