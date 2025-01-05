@@ -10,6 +10,7 @@ const {
 const loginRouter = require("./router/loginRouter");
 const usersRouter = require("./router/usersRouter");
 const inboxRouter = require("./router/inboxRouter.js");
+const messageRouter = require("./router/messageRouter.js");
 
 const app = express();
 dotEnv.config();
@@ -38,6 +39,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(loginRouter);
 app.use(usersRouter);
 app.use(inboxRouter);
+app.use(messageRouter);
 
 //error handling
 //common error handler
