@@ -91,4 +91,22 @@ const addConversation = async (req, res) => {
   }
 };
 
-module.exports = { getInboxs, addConversation };
+const deleteConversation = async (req, res) => {
+  try {
+    const deletedConversation = await findOneAndDelete({
+      _id: req.params.id?.toString(),
+    });
+
+    return res.status(200).json({
+      status: 200,
+      message: "Conversation deleted successfully",
+    });
+  } catch (e) {
+    return res.status(500).json({
+      status: 500,
+      message: "Can not delete conversation",
+    });
+  }
+};
+
+module.exports = { getInboxs, addConversation, deleteConversation };

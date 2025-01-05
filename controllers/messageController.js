@@ -65,4 +65,40 @@ const getMessages = async (req, res) => {
   }
 };
 
-module.exports = { addMessage, getMessages };
+const editMessage = async (req, res) => {
+  try {
+    const message = await Message.findOneAndUpdate(
+      { _id: req.params.id?.toString() },
+      { message: req.body.message },
+      { new: true }
+    );
+    return res.status(200).json({
+      status: 200,
+      message: "Message updated successfully",
+    });
+  } catch (e) {
+    return res.status(500).json({
+      status: 500,
+      message: "Can not update message",
+    });
+  }
+};
+
+const deleteMessage = async (req, res) => {
+  try {
+    const message = await Message.findOneAndDelete({
+      _id: req.params.id?.toString(),
+    });
+    return res.status(200).json({
+      status: 200,
+      message: "Message deleted successfully",
+    });
+  } catch (e) {
+    return res.status(500).json({
+      status: 500,
+      message: "Can not delete message",
+    });
+  }
+};
+
+module.exports = { addMessage, getMessages, editMessage, deleteMessage };
