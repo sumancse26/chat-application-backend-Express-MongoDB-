@@ -13,14 +13,6 @@ const login = async (req, res) => {
       user.password
     );
 
-    // const userInfo = {
-    //   _id: user._id,
-    //   name: user.name,
-    //   email: user.email,
-    //   mobile: user.mobile,
-    //   role: user.role,
-    // };
-
     const token = signJwtToken(user);
 
     res.cookie(process.env.COOKIE_NAME, token, {
@@ -37,7 +29,7 @@ const login = async (req, res) => {
   } catch (e) {
     res.json({
       status: 500,
-      message: e.message,
+      message: "Login Failed",
     });
   }
 };
