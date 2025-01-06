@@ -30,7 +30,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //set static folder
-app.use(express.static(path.join(__dirname, "public")));
+if (process.env.NODE_ENV !== "production") {
+  const staticPath = path.join(__dirname, "public");
+  app.use(express.static(staticPath));
+  console.log("Serving static files from:", staticPath);
+}
 
 //parse cookie
 app.use(cookieParser(process.env.COOKIE_SECRET));
