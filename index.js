@@ -3,6 +3,7 @@ const dotEnv = require("dotenv");
 const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const loginRouter = require("./router/loginRouter");
 const usersRouter = require("./router/usersRouter");
@@ -11,6 +12,14 @@ const messageRouter = require("./router/messageRouter.js");
 
 const app = express();
 dotEnv.config();
+
+const corsOptions = {
+  origin: "*",
+  credential: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+};
+app.options("", cors(corsOptions));
+app.use(cors(corsOptions));
 
 //database connection
 mongoose
