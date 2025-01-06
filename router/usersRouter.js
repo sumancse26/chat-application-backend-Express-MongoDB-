@@ -14,8 +14,7 @@ const router = express.Router();
 
 // router.get("/user", );
 router.post(
-  "/api/user",
-  checkLogin,
+  "/api/register",
   requireRole("admin"),
   fileUpload,
   userValidator,
