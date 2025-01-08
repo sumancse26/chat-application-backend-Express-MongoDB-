@@ -11,7 +11,7 @@ const inboxRouter = require("./router/inboxRouter.js");
 const messageRouter = require("./router/messageRouter.js");
 
 const corsOptions = {
-  origin: "*",
+  origin: "https://chat-app-one-swart.vercel.app/",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
 };
