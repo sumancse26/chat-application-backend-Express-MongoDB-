@@ -14,10 +14,7 @@ const corsOptions = {
   origin: "*",
   credentials: true,
   methods: "*",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "*",
-  "Access-Control-Allow-Headers": "*",
-  "Access-Control-Allow-Credentials": true,
+  allowedHeaders: ["Content-Type", "Authorization", "Accept"],
 };
 
 const app = express();
