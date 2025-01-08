@@ -16,11 +16,12 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
 };
 
+const app = express();
+
 dotEnv.config();
+
 app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
-
-const app = express();
 
 //database connection
 mongoose
