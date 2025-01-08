@@ -14,7 +14,7 @@ const app = express();
 dotEnv.config();
 
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:3000",
   credential: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
 };
