@@ -3,26 +3,26 @@ const dotEnv = require("dotenv");
 const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-//const cors = require("cors");
+const cors = require("cors");
 
 const loginRouter = require("./router/loginRouter");
 const usersRouter = require("./router/usersRouter");
 const inboxRouter = require("./router/inboxRouter.js");
 const messageRouter = require("./router/messageRouter.js");
 
-// const corsOptions = {
-//   origin: "*",
-//   credentials: true,
-//   methods: "*",
-//   allowedHeaders: ["Content-Type", "Authorization", "Accept"],
-// };
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  methods: "*",
+  allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+};
 
 const app = express();
 
 dotEnv.config();
 
-// app.use(cors(corsOptions));
-// app.options("*", cors(corsOptions));
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 //database connection
 mongoose
