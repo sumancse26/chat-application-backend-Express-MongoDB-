@@ -47,6 +47,14 @@ if (process.env.NODE_ENV !== "production") {
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 //routing setup
+router.get("/", async (req, res) => {
+  res.status(200).json({
+    title: "Express Testing",
+    message: "The app is working properly!",
+    users: `${req.protocol}://${req.get("host")}${req.originalUrl}users`,
+  });
+});
+
 app.use(loginRouter);
 app.use(usersRouter);
 app.use(inboxRouter);
