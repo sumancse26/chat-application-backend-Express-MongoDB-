@@ -11,10 +11,8 @@ const inboxRouter = require("./router/inboxRouter.js");
 const messageRouter = require("./router/messageRouter.js");
 
 const corsOptions = {
-  origin: "*",
+  origin: true,
   credentials: true,
-  methods: "*",
-  allowedHeaders: ["Content-Type", "Authorization", "Accept"],
 };
 
 const app = express();
@@ -22,7 +20,7 @@ const app = express();
 dotEnv.config();
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+// app.options("*", cors(corsOptions));
 
 //database connection
 mongoose
