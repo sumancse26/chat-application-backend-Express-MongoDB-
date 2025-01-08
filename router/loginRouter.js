@@ -7,6 +7,6 @@ const {
 
 const router = express.Router();
 
-router.get("/api/login", loginValidator, loginValidationResultHandler, login);
+router.post("/api/login", loginValidator, loginValidationResultHandler, login);
 
 module.exports = router;

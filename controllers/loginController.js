@@ -5,11 +5,11 @@ const { signJwtToken } = require("../middlewares/common/jwtToken.js");
 const login = async (req, res) => {
   try {
     const user = await User.findOne({
-      $or: [{ email: req.query.username }, { mobile: req.query.username }],
+      $or: [{ email: req.body.username }, { mobile: req.body.username }],
     });
 
     const validPassword = await bcrypt.compare(
-      req.query.password,
+      req.body.password,
       user.password
     );
 

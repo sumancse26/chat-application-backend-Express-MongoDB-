@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const { signJwtToken } = require("../middlewares/common/jwtToken.js");
 
 const getUsers = async (req, res) => {
   try {
@@ -36,9 +37,11 @@ const createUser = async (req, res) => {
 
     const user = new User(data);
     const savedUser = await user.save();
+    const token = signJwtToken(savedUser);
     return res.json({
       status: 200,
-      id: savedUser._id,
+      user: savedUser,
+      token,
       message: "User created successfully",
     });
   } catch (e) {
