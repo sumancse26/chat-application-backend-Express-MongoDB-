@@ -10,16 +10,17 @@ const usersRouter = require("./router/usersRouter");
 const inboxRouter = require("./router/inboxRouter.js");
 const messageRouter = require("./router/messageRouter.js");
 
-const app = express();
-dotEnv.config();
-
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
 };
-// app.options("", cors(corsOptions));
+
+dotEnv.config();
+app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
+
+const app = express();
 
 //database connection
 mongoose
