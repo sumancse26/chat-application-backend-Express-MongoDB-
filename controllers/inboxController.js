@@ -68,11 +68,13 @@ const addConversation = async (req, res) => {
       creator: {
         _id: userInfo._id,
         name: userInfo.name,
+        email: email,
         avatar: userInfo.avatar,
       },
       participant: {
         _id: participantInfo._id,
         name: participantInfo.name,
+        email: req.body.participant_email,
         avatar: participantInfo.avatar,
       },
     });

@@ -5,12 +5,14 @@ const conversationSchema = mongoose.Schema(
     creator: {
       _id: mongoose.Types.ObjectId,
       name: String,
+      email: String,
       avatar: String,
     },
 
     participant: {
       _id: mongoose.Types.ObjectId,
       name: String,
+      email: String,
       avatar: String,
     },
 
