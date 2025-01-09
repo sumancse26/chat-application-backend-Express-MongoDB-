@@ -35,6 +35,13 @@ const addMessage = async (req, res) => {
     };
     const message = new Message(postData);
     const savedMessage = await message.save();
+
+    //update last_message of conversation table
+    await Conversation.findOneAndUpdate(
+      { _id: req.body.conversation_id },
+      { last_message: req.body.message }
+    );
+
     return res.status(200).json({
       status: 200,
       _id: savedMessage._id,

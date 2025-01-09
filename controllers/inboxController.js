@@ -77,6 +77,7 @@ const addConversation = async (req, res) => {
         email: req.body.participant_email,
         avatar: participantInfo.avatar,
       },
+      last_message: req.body.last_message || "",
     });
 
     const savedConversation = await conversation.save();

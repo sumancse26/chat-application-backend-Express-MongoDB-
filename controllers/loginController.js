@@ -6,7 +6,7 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({
       $or: [{ email: req.body.username }, { mobile: req.body.username }],
-    });
+    }).select({ __v: 0, password: 0 });
 
     const validPassword = await bcrypt.compare(
       req.body.password,

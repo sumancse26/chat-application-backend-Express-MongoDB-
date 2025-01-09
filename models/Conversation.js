@@ -16,6 +16,8 @@ const conversationSchema = mongoose.Schema(
       avatar: String,
     },
 
+    last_message: String,
+
     last_updated: {
       type: Date,
       default: Date.now,
