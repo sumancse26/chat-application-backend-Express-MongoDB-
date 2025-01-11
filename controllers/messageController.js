@@ -7,7 +7,11 @@ const addMessage = async (req, res) => {
     const { email } = req;
 
     const conversationInfo = await Conversation.findOne({
-      _id: req.body.conversation_id,
+      $or: [
+        { _id: req.body.conversation_id },
+        { "creator.email": req.body.email },
+        { "participant.email": req.body.email },
+      ],
     });
 
     const userInfo = await User.findOne({ email });
@@ -25,11 +29,13 @@ const addMessage = async (req, res) => {
         _id: userInfo._id,
         name: userInfo.name,
         avatar: userInfo.avatar,
+        email: userInfo.email,
       },
       receiver: {
         _id: receiver._id,
         name: receiver.name,
         avatar: receiver.avatar,
+        email: receiver.email,
       },
       conversation_id: req.body.conversation_id,
     };

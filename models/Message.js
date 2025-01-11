@@ -11,11 +11,13 @@ const messageSchema = mongoose.Schema(
       _id: mongoose.Types.ObjectId,
       name: String,
       avatar: String,
+      email: String,
     },
     receiver: {
       _id: mongoose.Types.ObjectId,
       name: String,
       avatar: String,
+      email: String,
     },
     conversation_id: {
       type: mongoose.Types.ObjectId,
