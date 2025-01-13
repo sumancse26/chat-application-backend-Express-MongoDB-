@@ -110,4 +110,63 @@ const deleteMessage = async (req, res) => {
   }
 };
 
-module.exports = { addMessage, getMessages, editMessage, deleteMessage };
+const addMessageWithConversation = async (req, res) => {
+  try {
+    const { email } = req;
+
+    if (email == req.body.email) {
+      return res.status(500).json({
+        status: 500,
+        message: "Can not send message to yourself",
+      });
+    }
+
+    const userInfo = await User.findOne({ email });
+    const participantInfo = await User.findOne({ email: req.body.email });
+
+    if (!participantInfo) {
+      return res.status(500).json({
+        status: 500,
+        message: "Can not find participant",
+      });
+    }
+
+    const postData = {
+      message: req.body.message,
+      attachment: req.body.attachment || [],
+      sender: {
+        _id: userInfo._id,
+        name: userInfo.name,
+        avatar: userInfo.avatar,
+        email: userInfo.email,
+      },
+      receiver: {
+        _id: participantInfo._id,
+        name: participantInfo.name,
+        avatar: participantInfo.avatar || null,
+        email: participantInfo.email,
+      },
+      conversation_id: participantInfo._id,
+    };
+    const message = new Message(postData);
+    const savedMessage = await message.save();
+    return res.status(200).json({
+      status: 200,
+      _id: savedMessage._id,
+      message: "Message sent successfully",
+    });
+  } catch (e) {
+    res.status(500).json({
+      status: 500,
+      message: "Can not send message",
+    });
+  }
+};
+
+module.exports = {
+  addMessage,
+  getMessages,
+  editMessage,
+  deleteMessage,
+  addMessageWithConversation,
+};
