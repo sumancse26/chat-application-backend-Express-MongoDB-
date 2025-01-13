@@ -131,6 +131,24 @@ const addMessageWithConversation = async (req, res) => {
       });
     }
 
+    const conversation = new Conversation({
+      creator: {
+        _id: userInfo._id,
+        name: userInfo.name,
+        email: email,
+        avatar: userInfo.avatar,
+      },
+      participant: {
+        _id: participantInfo._id,
+        name: participantInfo.name,
+        email: req.body.email,
+        avatar: participantInfo.avatar || null,
+      },
+      last_message: req.body.message || "",
+    });
+
+    const savedConversation = await conversation.save();
+
     const postData = {
       message: req.body.message,
       attachment: req.body.attachment || [],
@@ -146,7 +164,7 @@ const addMessageWithConversation = async (req, res) => {
         avatar: participantInfo.avatar || null,
         email: participantInfo.email,
       },
-      conversation_id: participantInfo._id,
+      conversation_id: savedConversation._id,
     };
     const message = new Message(postData);
     const savedMessage = await message.save();
