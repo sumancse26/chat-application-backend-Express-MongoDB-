@@ -120,7 +120,7 @@ const addMessageWithConversation = async (req, res) => {
         message: "Can not send message to yourself",
       });
     }
-    const savedConversation = {};
+    let savedConversation = {};
     const userInfo = await User.findOne({ email });
     const participantInfo = await User.findOne({ email: req.body.email });
 
