@@ -120,9 +120,18 @@ const addMessageWithConversation = async (req, res) => {
         message: "Can not send message to yourself",
       });
     }
-
+    const savedConversation = {};
     const userInfo = await User.findOne({ email });
     const participantInfo = await User.findOne({ email: req.body.email });
+
+    const participantExists = await Conversation.findOne({
+      $or: [
+        {
+          "creator.email": req.body.email,
+        },
+        { "participant.email": req.body.email },
+      ],
+    });
 
     if (!participantInfo) {
       return res.status(500).json({
@@ -131,23 +140,31 @@ const addMessageWithConversation = async (req, res) => {
       });
     }
 
-    const conversation = new Conversation({
-      creator: {
-        _id: userInfo._id,
-        name: userInfo.name,
-        email: email,
-        avatar: userInfo.avatar,
-      },
-      participant: {
-        _id: participantInfo._id,
-        name: participantInfo.name,
-        email: req.body.email,
-        avatar: participantInfo.avatar || null,
-      },
-      last_message: req.body.message || "",
-    });
+    if (participantExists) {
+      savedConversation = await Conversation.findOneAndUpdate(
+        { _id: participantExists._id },
+        { $set: { last_message: req.body.message } },
+        { new: true }
+      );
+    } else {
+      const conversation = new Conversation({
+        creator: {
+          _id: userInfo._id,
+          name: userInfo.name,
+          email: email,
+          avatar: userInfo.avatar,
+        },
+        participant: {
+          _id: participantInfo._id,
+          name: participantInfo.name,
+          email: req.body.email,
+          avatar: participantInfo.avatar || null,
+        },
+        last_message: req.body.message || "",
+      });
 
-    const savedConversation = await conversation.save();
+      savedConversation = await conversation.save();
+    }
 
     const postData = {
       message: req.body.message,
