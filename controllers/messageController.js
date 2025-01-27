@@ -187,8 +187,8 @@ const addMessageWithConversation = async (req, res) => {
     const savedMessage = await message.save();
     return res.status(200).json({
       status: 200,
-      _id: savedMessage._id,
-      message: "Message sent successfully",
+      conversation: savedConversation,
+      message: "Added successfully",
     });
   } catch (e) {
     res.status(500).json({
