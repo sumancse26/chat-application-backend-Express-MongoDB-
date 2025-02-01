@@ -51,6 +51,18 @@ const addMessage = async (req, res) => {
       text: req.body.message,
       conversation: result,
       conversation_id: req.body.conversation_id,
+      sender: {
+        _id: userInfo._id,
+        name: userInfo.name,
+        avatar: userInfo.avatar,
+        email: userInfo.email,
+      },
+      receiver: {
+        _id: receiver._id,
+        name: receiver.name,
+        avatar: receiver.avatar,
+        email: receiver.email,
+      },
       message: "Message sent successfully",
     });
   } catch (e) {
