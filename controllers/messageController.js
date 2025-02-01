@@ -51,6 +51,9 @@ const addMessage = async (req, res) => {
       text: req.body.message,
       conversation: result,
       conversation_id: req.body.conversation_id,
+      attachment: savedMessage.attachment || [],
+      createdAt: savedMessage.createdAt,
+      updatedAt: savedMessage.updatedAt,
       sender: {
         _id: userInfo._id,
         name: userInfo.name,
