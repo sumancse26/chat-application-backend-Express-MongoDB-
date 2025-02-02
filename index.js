@@ -1,3 +1,5 @@
+const http = require("http");
+const socketIo = require("socket.io");
 const express = require("express");
 const dotEnv = require("dotenv");
 const mongoose = require("mongoose");
@@ -16,11 +18,14 @@ const corsOptions = {
 };
 
 const app = express();
+const server = http.createServer(app); // Create HTTP server
+const io = socketIo(server, {
+  cors: corsOptions, // Allow CORS for WebSocket
+});
 
 dotEnv.config();
 
 app.use(cors(corsOptions));
-// app.options("*", cors(corsOptions));
 
 //database connection
 mongoose
@@ -40,7 +45,6 @@ app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV !== "production") {
   const staticPath = path.join(__dirname, "public");
   app.use(express.static(staticPath));
-  console.log("Serving static files from:", staticPath);
 }
 
 //parse cookie
@@ -60,6 +64,30 @@ app.use(usersRouter);
 app.use(inboxRouter);
 app.use(messageRouter);
 
-app.listen(process.env.PORT, () => {
+// Socket.io Setup
+io.on("connection", (socket) => {
+  console.log("A user connected:", socket.id);
+
+  // Listen for new messages
+  socket.on("sendMessage", (data) => {
+    console.log("New message:", data);
+
+    // Emit the message to all clients (broadcast)
+    io.emit("message", data);
+    io.emit("conversation", data);
+  });
+
+  // Listen for user typing events
+  socket.on("typing", (data) => {
+    socket.broadcast.emit("userTyping", data);
+  });
+
+  // Handle disconnect
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
+});
+
+server.listen(process.env.PORT, () => {
   console.log(`Server started on port ${process.env.PORT}`);
 });
